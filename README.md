@@ -40,8 +40,12 @@ Flatfile 格式如下：
 
 ### H2O on Spark/HDFS
 
-H2O 通过名为 Sparkling Water 的组件来将计算投送到 Spark 去进行分布式运算。Sparkling Water 以 Spark 的客户端代理的方式运行在本地。
-下载地址：https://s3.amazonaws.com/h2o-release/sparkling-water/spark-2.4/3.26.2-2.4/index.html
+H2O 通过名为 Sparkling Water 的组件来将计算投送到 Spark 去进行分布式运算。Sparkling Water 
+内部封装了 H2O 并以 Spark 应用程序（Spark driver）的方式来运行。Sparkling Water 启动后会共享
+在 Spark executor，并在其上启动 H2O 集群, 然后通过 H2OContext 来保持 driver 与 H2O cluster
+和 Spark 三方之间的通讯。
+
+Sparkling Water 下载地址：https://s3.amazonaws.com/h2o-release/sparkling-water/spark-2.4/3.26.2-2.4/index.html
 
 #### Sparkling Water for Spark（local模式）
 
