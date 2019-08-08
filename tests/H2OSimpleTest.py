@@ -23,7 +23,7 @@ class H2OSimpleTest(unittest.TestCase):
         ...
         --------------------------  ------------------------------------------
         """
-        h2o.init(ip='localhost', port='54321',
+        h2o.init(ip='localhost', port='54323',
                  name='MyH2OCluster'  # Cluster name, 可选. 如果指定了该名称客户端会检查是否与登录的 Cluster 匹配。
         )
 
@@ -41,11 +41,19 @@ class H2OSimpleTest(unittest.TestCase):
         ...
         
         1.  载入数据
+        
+        import_file() 函数以服务器当地为参照地址载入数据文件。支持 HTTP 或 HDFS url
+        upload_file() 以客户点本地为参照上载数据文件。
+        
+        数据集处理的基本API可参考：http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-munging.html
         """
-        airlines = h2o.import_file("allyears2k_headers.zip")
+        # airlines = h2o.import_file("allyears2k_headers.zip")
+        airlines = h2o.upload_file("allyears2k_headers.zip")
 
         """
         2. 指定＂因子(factor)＂字段．关于 factor 的解释参考：https://www.zhihu.com/question/48472404
+        
+        H2O支持的算法参考：http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science.html
         """
         airlines['Year'] = airlines['Year'].asfactor()
         airlines['Month'] = airlines['Month'].asfactor()

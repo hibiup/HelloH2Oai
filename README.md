@@ -38,9 +38,93 @@ Flatfile 格式如下：
 * http://docs.h2o.ai/h2o/latest-stable/h2o-docs/starting-h2o.html#h2o-options
 * http://docs.h2o.ai/h2o/latest-stable/h2o-docs/starting-h2o.html#clouding-up-cluster-creation
 
-### H2O and Spark/HDFS
+### H2O on Spark/HDFS
 
-H2O 通过名为 Sparkling Water 的组件来将计算投送到 Spark 上去进行分布式运算。(http://docs.h2o.ai/sparkling-water/2.3/latest-stable/doc/index.html)
+H2O 通过名为 Sparkling Water 的组件来将计算投送到 Spark 去进行分布式运算。Sparkling Water 以 H2O 到 Spark 的客户端代理的方式运行在本地。
+下载地址：https://s3.amazonaws.com/h2o-release/sparkling-water/spark-2.4/3.26.2-2.4/index.html
+
+#### Sparkling Water for Spark（local模式）
+
+Sparkling Water for Spark local，适合本地开发时使用。(非 Windows)
+
+设置 Spark 环境变量：
+
+~~~bash
+$ export SPARK_HOME="/path/to/spark/installation" 
+$ export MASTER="local[*]" 
+~~~
+
+启动 local 模式下的 Sparkling Water 命令行环境来代替 Spark-shell：
+~~~bash
+$ cd sparkling-water-3.26.2-2.3
+$ bin/sparkling-shell --conf "spark.executor.memory=1g"
+~~~
+
+#### Sparkling Water for Spark(Standalone)
+
+Spark standalone 模式允许使用 Spark cluster 的计算能力：
+
+设置 Spark 环境变量：
+
+~~~bash
+$ export SPARK_HOME="/path/to/spark/installation" 
+$ export MASTER="spark://localhost:7077"
+~~~
+
+启动 Sparkling Water 命令行环境来代替 Spark-shell：
+~~~bash
+$ cd sparkling-water-3.26.2-2.3
+$ bin/sparkling-shell
+~~~
+
+#### Sparkling Water as Spark package
+
+以上模式中 Sparkling Water 都运行在本地，Sparkling Water as Spark package 运行将 Sparkling Water 以包的形式运行在 Spark cluster 内：
+
+设置 Spark 环境变量：
+
+~~~bash
+$ export SPARK_HOME="/path/to/spark/installation" 
+$ export MASTER="spark://localhost:7077"  # standalone
+或
+$ export MASTER="yarn"                    # yarn cluster
+或
+$ export MASTER="yarn-client"             # yarn client
+~~~
+
+在 Spark-cluster 中启动 Sparkling Water:
+~~~bash
+$ SPARK_HOME/bin/spark-shell --packages ai.h2o:sparkling-water-package_2.11:3.26.2-2.3
+~~~ 
+
+#### Sparkling Water for HDFS/YARN (集群计算模式)
+
+Sparkling Water for HDFS/YARN 可以使用 YARN Cluster 的计算能力。
+
+设置 HADOOP 环境变量：
+
+~~~bash
+$ export SPARK_HOME='/path/to/spark/installation'
+$ export HADOOP_CONF_DIR=/etc/hadoop/conf
+$ export MASTER="yarn"
+或
+$ export MASTER="yarn-client"
+~~~
+
+启动 yarn cluster 模式下的 Sparkling Water 的命令行环境来代替 Spark-shell
+
+~~~bash
+$ cd sparkling-water-3.26.2-2.3/
+$ bin/sparkling-shell --num-executors 3 --executor-memory 2g --master yarn --deploy-mode client
+~~~
+
+以上配置参考：
+* http://docs.h2o.ai/sparkling-water/2.3/latest-stable/doc/install/install_and_start.html
+* https://www.h2o.ai/blog/sparkling-water-on-yarn-example/
+
+其他参考地址：
+* ttp://docs.h2o.ai/sparkling-water/2.3/latest-stable/doc/index.html
+* http://docs.h2o.ai/h2o/latest-stable/h2o-docs/welcome.html#getting-started-with-sparkling-water
 
 ## 客户端
 
