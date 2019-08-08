@@ -12,18 +12,18 @@ java -jar h2o.jar
 
 ### 认证
 
-缺省的 H2O 服务允许匿名访问,参考该地址设置访问认证: http://docs.h2o.ai/h2o/latest-stable/h2o-docs/starting-h2o.html#authentication-options 
+缺省的 H2O 服务允许匿名访问, 设置访问认证参考该地址: http://docs.h2o.ai/h2o/latest-stable/h2o-docs/starting-h2o.html#authentication-options 
 
 ### Cluster
 
-多个 H2O 实例可以组成 Cluster。以下在本地启动一个名为 MyH2OCluster 的 Cluster(同一个 cluster 名称必须相同)，每个节点分配 2G 内存:
+多个 H2O 实例可以组成 Cluster。以下在本地启动一个名为 `MyH2OCluster` 的 Cluster(同一个 cluster 名称必须相同)，每个节点分配 2G 内存:
 ```bash
 $ java -Xmx2g -jar h2o.jar -name MyH2OCluster -port 54321
 $ java -Xmx2g -jar h2o.jar -name MyH2OCluster -port 54322
 $ java -Xmx2g -jar h2o.jar -name MyH2OCluster -port 54323
 ```
 
-可以不指定端口，h2o会自动从 54322 开始寻找空闲端口。如果各实例启动在不同主机上， H2O Cluster 支持通过广播（multicast based）或 Flatfile based 两种模式找到对方。
+可以不指定端口，h2o会自动从 54322 开始寻找空闲端口。如果各实例启动在不同主机上， H2O Cluster 支持通过广播（multicast based）或 Flatfile based 两种模式找到其他节点。
 
 * Multicast: 通过参数 `-network <ip_address>/<mask>` 来启动 h2o.jar。例如：`-network 178.0.0.0/8`
 * Flatfile: 将主机IP地址罗列在一个文本文件中，然后通过 `-flatfile <file_name>` 传递个 h2o.jar
@@ -44,4 +44,4 @@ H2O 通过名为 Sparkling Water 的组件来将计算投送到 Spark 上去进�
 
 ## 客户端
 
-参考 tests 下得测试案例
+参考 tests 下的测试案例
