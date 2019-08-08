@@ -3,3 +3,4 @@ requests
 tabulate
 colorama>=0.3.8
 future
+h2o_pysparkling_2.3
